@@ -47,7 +47,7 @@ logger.error(e.getMessage());
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String jwt=jwtUtils.getJwtFromHeader(request);
+        String jwt=jwtUtils.getJwtFromCookies(request);
         logger.debug("AuthTokenFilter.java:{}",jwt);
         return jwt;
     }
