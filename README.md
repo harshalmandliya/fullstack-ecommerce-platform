@@ -63,6 +63,8 @@ The application uses JPA with Hibernate to manage database entities. The main en
 - Category
 - Order
 - Cart
+- Address
+- Payments
 
 ## Security
 
