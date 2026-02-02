@@ -37,8 +37,12 @@ public class ProductServiceImp implements ProductService {
    private ModelMapper modelMapper;
 @Autowired
     private FileService fileService;
+
 @Value("${project.image}")
 private String path;
+
+@Value("${image.base.url}")
+private String imageBaseUrl;
 
     @Override
     public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
@@ -77,7 +81,12 @@ else{
             throw new APIException("No products found");
         }
         List<ProductDTO> productDTOS=products.stream()
-                .map(product -> modelMapper.map(product,ProductDTO.class)).toList();
+                .map(product -> {
+                  ProductDTO productDTO = modelMapper.map(product,ProductDTO.class);
+                  productDTO.setImage(constructImageUrl(product.getImage()));
+                  return productDTO;
+                }).toList();
+
         ProductResponse productResponse=new ProductResponse();
         productResponse.setContent(productDTOS);
         productResponse.setPageNumber(productPage.getNumber());
@@ -87,6 +96,11 @@ else{
         productResponse.setLastPage(productPage.isLast());
         return productResponse;
     }
+
+
+      private String constructImageUrl(String imageName){
+        return imageBaseUrl.endsWith("/") ? imageBaseUrl + imageName :  imageBaseUrl + "/" + imageName;
+      }
 
     @Override
     public ProductResponse searchByCategory(Long categoryId,Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {

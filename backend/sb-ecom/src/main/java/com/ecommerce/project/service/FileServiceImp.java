@@ -21,7 +21,7 @@ public class FileServiceImp implements FileService {
         if(!folder.exists()){
             folder.mkdir();
         }
-        Files.copy(file.getInputStream(), Paths.get(fileName));
+        Files.copy(file.getInputStream(), Paths.get(filePath));
         return fileName;
     }
 }

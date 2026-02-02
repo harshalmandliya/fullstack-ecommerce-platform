@@ -52,3 +52,4 @@ src/main/resources/application.yml
 Thumbs.db
 
 backend/.idea/
+backend/images
