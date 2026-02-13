@@ -1,9 +1,17 @@
 import './App.css'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Home from './components/home/Home';
 import Products from './components/products/Products';
+
 function App() {
 
   return (
-    <Products></Products>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path='/products' element={ <Products />}/>
+      </Routes>
+    </Router>
   )
 }
 
