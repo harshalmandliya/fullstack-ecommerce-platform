@@ -10,15 +10,18 @@ const ProductCard = ({
     quantity,
     price,
     discount,
-    specialPrice
+    specialPrice,
+    about=false,
 }) => {
     const [openProductViewModal, setOpenProductViewModal] = useState(false);
     const btnLoader=false;
     const [selectedViewProduct, setSelectedViewProduct]=useState("");
     const isAvailable=quantity && Number(quantity)>0;
     const handleProductView=(product)=>{
-        setSelectedViewProduct(product);
-        setOpenProductViewModal(true);
+        if(!about){
+            setSelectedViewProduct(product);
+            setOpenProductViewModal(true);
+        }
     }
 
     return (
@@ -38,7 +41,8 @@ const ProductCard = ({
             <div className="min-h-20 max-h-20">
                 <p className="text-gray-600 text-sm">{truncateText(description,80)}</p>
             </div>
-            <div className="flex item-center justify-between">
+            {!about &&(
+<div className="flex item-center justify-between">
             {specialPrice?( <div className="flex flex-col">
                 <span className="text-grey-700 line-through">${Number(specialPrice).toFixed(2)}</span>
                  <span className="text-xl font-bold text-slate-700">${Number(specialPrice).toFixed(2)}</span>
@@ -53,7 +57,8 @@ const ProductCard = ({
                 {isAvailable?"Add to Cart":"Out of Stock"}
             </button>
             </div>
-         </div>
+            )}
+                     </div>
          <ProductViewModal 
          open={openProductViewModal} 
          setOpen={setOpenProductViewModal} 
