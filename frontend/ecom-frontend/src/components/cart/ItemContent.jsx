@@ -77,7 +77,7 @@ const ItemContent = ({
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {formatPrice(specialPrice ?? price)}
+               {formatPrice(specialPrice > 0 ? specialPrice : price)}
             </div>
 
             <div className="justify-self-center">
@@ -105,7 +105,7 @@ const ItemContent = ({
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {formatPrice(Number(currentQuantity) * Number(specialPrice ?? price))}
+                {formatPrice(Number(currentQuantity) * Number(specialPrice > 0 ? specialPrice : price))}
             </div>
         </div>
     )
