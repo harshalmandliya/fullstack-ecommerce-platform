@@ -6,6 +6,7 @@ import { increaseCartQuantity } from "../../store/actions";
 import toast from "react-hot-toast";
 import { decreaseCartQuantity } from "../../store/actions";
 import { removeFromCart } from "../../store/actions";
+import { formatPrice } from "../../utils/formatPrice";
 
 const ItemContent = ({
     productId,
@@ -76,7 +77,7 @@ const ItemContent = ({
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {Number(specialPrice || price)}
+                {formatPrice(specialPrice ?? price)}
             </div>
 
             <div className="justify-self-center">
@@ -104,7 +105,7 @@ const ItemContent = ({
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {Number(currentQuantity) * Number(specialPrice || price)}
+                {formatPrice(Number(currentQuantity) * Number(specialPrice ?? price))}
             </div>
         </div>
     )
