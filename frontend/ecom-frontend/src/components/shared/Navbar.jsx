@@ -10,6 +10,7 @@ const Navbar = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
     const cart = useSelector((state) => state.carts.cart);
+    const { user } = useSelector((state) => state.auth);
 
     return (
         <div className="h-[70px] bg-custom-gradient text-white z-50 flex items-center sticky top-0">
@@ -76,6 +77,11 @@ const Navbar = () => {
                 </li>
 
 
+                 {(user && user.id) ? (
+                    <li className="font-[500] transition-all duration-150">
+                        <p>Welcome</p>
+                    </li>
+                ) : (
                 <li className="font-[500] transition-all duration-150">
                    <Link className="flex items-center space-x-2 px-4 py-[6px] 
                             bg-gradient-to-r from-purple-600 to-red-500 
@@ -87,6 +93,7 @@ const Navbar = () => {
                         <span>Login</span>
                    </Link> 
                 </li>
+                )}
             </ul>
 
             <button
