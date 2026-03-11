@@ -1,5 +1,5 @@
 import { Badge } from "@mui/material";
-import { use, useState } from "react";
+import { useState } from "react";
 import { FaShoppingCart, FaSignInAlt, FaStore } from "react-icons/fa";
 import { IoIosMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
