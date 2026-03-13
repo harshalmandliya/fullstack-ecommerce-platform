@@ -61,14 +61,13 @@ const Cart = () => {
                         Taxes and shipping calculated at checkout
                     </p>
 
-                    <Link className="w-full flex justify-end" to="/checkout">
-                    <button
-                        onClick={() => {}}
-                        className="font-semibold w-[300px] py-2 px-4 rounded-sm bg-customBlue text-white flex items-center justify-center gap-2 hover:text-gray-300 transition duration-500">
-                        <MdShoppingCart size={20} />
-                        Checkout
-                    </button>
-                    </Link>
+                    <Link className="w-full" to="/checkout">
+                        <button
+                            className="font-semibold w-full py-2 px-4 rounded-sm bg-blue-600 text-white flex items-center justify-center gap-2 hover:bg-blue-700 transition duration-500">
+                            <MdShoppingCart size={20} />
+                            Checkout
+                        </button>
+                        </Link>
 
                     <Link className="flex gap-2 items-center mt-2 text-slate-500" to="/products">
                         <MdArrowBack />
