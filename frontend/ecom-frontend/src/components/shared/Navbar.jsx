@@ -80,7 +80,7 @@ const Navbar = () => {
 
                  {(user && user.id) ? (
                     <li className="font-[500] transition-all duration-150">
-                        <p><UserMenu /></p>
+                        <div><UserMenu /></div>
                     </li>
                 ) : (
                 <li className="font-[500] transition-all duration-150">

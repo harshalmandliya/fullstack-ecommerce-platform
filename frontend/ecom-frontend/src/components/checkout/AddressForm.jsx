@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { FaAddressCard } from 'react-icons/fa';
 import { useDispatch,useSelector } from 'react-redux';
 import Spinners from '../shared/Spinners';
+import { addUpdateUserAddress } from '../../store/actions/index';
+import toast from 'react-hot-toast';
 
 const AddAddressForm = ({address, setOpenAddressModal}) => {
     const dispatch = useDispatch();
@@ -39,7 +41,7 @@ const AddAddressForm = ({address, setOpenAddressModal}) => {
                 <InputField
                     label="Building Name"
                     required
-                    id="building"
+                    id="buildingName"
                     type="text"
                     message="*Building Name is required"
                     placeholder="Enter Building Name"
@@ -103,17 +105,19 @@ const AddAddressForm = ({address, setOpenAddressModal}) => {
             </div>
 
             <button
-                disabled={btnLoader}
-                className="text-white bg-customBlue px-4 py-2 rounded-md mt-4"
-                type="submit">
-                {btnLoader ? (
-                    <>
-                    <Spinners /> Loading...
-                    </>
-                ) : (
-                    <>Save</>
-                )}
-            </button>
+  disabled={btnLoader}
+  className="text-white bg-blue-600 px-4 py-2 rounded-md mt-4 flex items-center gap-2 disabled:opacity-50"
+  type="submit"
+>
+  {btnLoader ? (
+    <>
+      <Spinners />
+      Loading...
+    </>
+  ) : (
+    "Save"
+  )}
+</button>
             </form>
         </div>
   )
