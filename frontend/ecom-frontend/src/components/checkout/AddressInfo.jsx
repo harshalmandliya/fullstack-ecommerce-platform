@@ -4,16 +4,18 @@ import { FaAddressBook } from 'react-icons/fa';
 import { useState } from 'react';
 import AddressInfoModal from './AddressInfoModal';
 import AddAddressForm from './AddressForm';
+import { useSelector } from 'react-redux';
+import AddressList from './AddressList';
 
-const AddressInfo = () => {
+const AddressInfo = ({address}) => {
     const [openAddressModal, setOpenAddressModal] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState("");
     const addNewAddressHandler = () => {
         setSelectedAddress("");
         setOpenAddressModal(true);
     };
-    const noAddressExist = true;
-    const isLoading = false;
+      const noAddressExist = !address || address.length === 0;
+    const { isLoading, btnLoader } = useSelector((state) => state.errors);
   return (
     <div className='pt-4'>
         {noAddressExist ? (
@@ -42,9 +44,24 @@ const AddressInfo = () => {
                     <Skeleton />
                 </div>
             ) : (
+                <>
                 <div className='space-y-4 pt-6'>
-                    <p>Address list here...</p>
+                    <AddressList 
+                        addresses={address}
+                        setSelectedAddress={setSelectedAddress}
+                        setOpenAddressModal={setOpenAddressModal}
+                        />
                 </div>
+                 {address.length > 0 && (
+                    <div className='mt-4'>
+                        <button 
+                            onClick={addNewAddressHandler}
+                            className='px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition-all'>
+                                Add More
+                        </button>
+                    </div>
+                )}
+                </>
             )}
             </div>
         )}

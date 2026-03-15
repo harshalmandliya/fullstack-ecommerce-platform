@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react'
 import AddressInfo from './AddressInfo';
 import { getUserAddresses } from '../../store/actions';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch();
+     const { address } = useSelector(
+        (state) => state.auth
+    )
 
     const steps = [
         "Address",
@@ -30,7 +34,7 @@ const Checkout = () => {
         </Stepper>
 
         <div className='mt-5'>
-            {activeStep === 0 && <AddressInfo />}
+            {activeStep === 0 && <AddressInfo  address={address}/>}
         </div>
     </div>
   );
