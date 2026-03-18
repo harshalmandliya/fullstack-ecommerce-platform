@@ -6,6 +6,9 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { Button } from '@mui/material';
+import Skeleton from '../shared/Skeleton';
+import PaymentMethod from './PaymentMethod';
+import ErrorPage from '../shared/ErrorPage';
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -63,6 +66,7 @@ const Checkout = () => {
         ) : (
             <div className='mt-5'>
                 {activeStep === 0 && <AddressInfo address={address} />}
+                {activeStep === 1 && <PaymentMethod />}
             </div>
         )}
          <div
