@@ -100,6 +100,7 @@ const Checkout = () => {
                 </button>
             )} 
         </div>
+         {errorMessage && <ErrorPage message={errorMessage} />}
     </div>
   );
 }
