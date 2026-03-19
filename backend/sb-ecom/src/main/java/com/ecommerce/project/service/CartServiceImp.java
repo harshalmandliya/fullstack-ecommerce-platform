@@ -218,7 +218,7 @@ cartDTO.setProducts(products);
 
         // Process each item in the request to add to the cart
         for (CartItemDTO cartItemDTO : cartItems) {
-            Long productId = cartItemDTO.getProductDTO().getProductId();
+            Long productId = cartItemDTO.getProductId();
             Integer quantity = cartItemDTO.getQuantity();
 
             // Find the product by ID
