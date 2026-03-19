@@ -197,6 +197,7 @@ cartDTO.setProducts(products);
         return newCart;
     }
 
+    @Transactional
     @Override
     public String createOrUpdateCartWithItems(List<CartItemDTO> cartItems) {
         // Get user's email
