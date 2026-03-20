@@ -16,6 +16,9 @@ export const authReducer = (state = initialState, action) => {
                 address: null,
              };
             
+             case "CLIENT_SECRET":
+            return { ...state, clientSecret: action.payload };
+            
             case "SELECT_CHECKOUT_ADDRESS":
         return { ...state, selectedUserCheckoutAddress: action.payload };
 

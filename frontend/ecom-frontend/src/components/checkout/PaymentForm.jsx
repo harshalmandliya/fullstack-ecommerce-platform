@@ -29,11 +29,13 @@ const PaymentForm = ({ clientSecret, totalPrice }) => {
                 <div className='text-red-500 mt-2'>{errorMessage}</div>
             )}
 
-            <button
-                disabled={!stripe || loading}>
-                    {!loading ? `Pay $${Number(totalPrice).toFixed(2)}`
-                            : "Processing"}
-            </button>
+                        <button
+                type="submit"
+                disabled={!stripe || loading}
+                className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+                >
+                {!loading ? `Pay ₹${Number(totalPrice).toFixed(2)}` : "Processing..."}
+                </button>
             </>
         )}
     </form>
