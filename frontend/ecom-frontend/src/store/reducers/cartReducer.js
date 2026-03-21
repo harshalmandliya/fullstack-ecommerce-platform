@@ -42,6 +42,7 @@ export const cartReducer = (state = initialState, action) => {
             };
     
             case "GET_USER_CART_PRODUCTS":
+            {console.log("Getting user cart products...")}
             return {
                 ...state,
                 cart: action.payload,
@@ -50,6 +51,7 @@ export const cartReducer = (state = initialState, action) => {
             };
 
           case "CLEAR_CART":
+            {console.log("Clearing cart...")}
             return { cart:[], totalPrice: 0, cartId: null};
             
         default:
