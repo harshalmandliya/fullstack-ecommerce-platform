@@ -40,12 +40,13 @@ function App() {
             <Route path='/login' element={ <LogIn />}/>
             <Route path='/register' element={ <Register />}/>
         </Route>
-       <Route path='/' element={<PrivateRoute adminOnly />}>
-    <Route path='/admin' element={<AdminLayout />} />
-    <Route path='/admin/dashboard' element={<Dashboard />} />
-    <Route path='/admin/products' element={<AdminProducts />} />
-    <Route path='/admin/sellers' element={<Sellers />} />
-    <Route path='/admin/categories' element={<Category />} />
+       <Route element={<PrivateRoute adminOnly />}>
+  <Route path="/admin" element={<AdminLayout />}>
+    <Route path="" element={<Dashboard />} />
+    <Route path="products" element={<AdminProducts />} />
+    <Route path="sellers" element={<Sellers />} />
+    <Route path="categories" element={<Category />} />
+  </Route>
 </Route>
       </Routes>
     </Router>
