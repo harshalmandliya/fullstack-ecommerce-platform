@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import Spinners from '../../shared/Spinners';
 import Skeleton from '../../shared/Skeleton';
 import ErrorPage from '../../shared/ErrorPage';
-import SelectTextField from '../../shared/SelectTestField';
+import SelectTextField from '../../shared/SelectTextField';
 
 const AddProductForm = ({ setOpen, product, update=false}) => {
 const [loader, setLoader] = useState(false);
@@ -167,6 +167,24 @@ const dispatch = useDispatch();
                 Cancel
             </Button>
 
+     {!update && (
+            <Button
+                disabled={loader}
+                type='submit'
+                variant='contained'
+                color='primary'
+                className='bg-custom-blue text-white  py-[10px] px-4 text-sm font-medium'>
+                {loader ? (
+                    <div className='flex gap-2 items-center'>
+                        <Spinners /> Loading...
+                    </div>
+                ) : (
+                    "Add"
+                )}
+            </Button>
+     )}
+
+     {update && (
             <Button
                 disabled={loader}
                 type='submit'
@@ -181,6 +199,7 @@ const dispatch = useDispatch();
                     "Update"
                 )}
             </Button>
+     )}
         </div>
         </form>
     </div>
