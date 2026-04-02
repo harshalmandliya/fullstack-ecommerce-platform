@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { fetchProducts } from "../store/actions";
+import { dashboardProductsAction } from "../store/actions";
 
 const useProductFilter = () => {
     const [searchParams] = useSearchParams();
@@ -34,6 +35,25 @@ const useProductFilter = () => {
         console.log("QUERY STRING", queryString);
         
         dispatch(fetchProducts(queryString));
+
+    }, [dispatch, searchParams]);
+};
+
+export const useDashboardProductFilter = () => {
+    const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        const currentPage = searchParams.get("page")
+            ? Number(searchParams.get("page"))
+            : 1;
+
+        params.set("pageNumber", currentPage - 1);
+
+        const queryString = params.toString();
+        dispatch(dashboardProductsAction(queryString));
 
     }, [dispatch, searchParams]);
 };
