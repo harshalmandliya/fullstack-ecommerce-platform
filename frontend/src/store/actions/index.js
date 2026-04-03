@@ -421,3 +421,21 @@ export const updateProductImageFromDashboard =
      
     }
 };
+
+export const addNewProductFromDashboard = 
+    (sendData, toast, reset, setLoader, setOpen) => async (dispatch,getState) => {
+    try {
+        setLoader(true);
+        await api.post(`/admin/categories/${sendData.categoryId}/product`, sendData);
+        toast.success("Product added successfully");
+        reset();
+        setLoader(false);
+        setOpen(false);
+        await dispatch(dashboardProductsAction());
+    } catch (error) {
+        toast.error(error?.response?.data?.description || "Product addition failed");
+    }
+    finally {
+        setLoader(false);
+    }
+};
