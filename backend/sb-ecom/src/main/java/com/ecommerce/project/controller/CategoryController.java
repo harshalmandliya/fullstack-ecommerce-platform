@@ -60,6 +60,7 @@ public ResponseEntity<CategoryResponse> getAllCategories(
             @ApiResponse(responseCode = "400", description = "Invalid category data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized access")
     })
+
 @PostMapping("/admin/categories")
 public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
         categoryService.createCategory(categoryDTO);
@@ -74,6 +75,7 @@ public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO cat
             @ApiResponse(responseCode = "404", description = "Category not found"),
             @ApiResponse(responseCode = "401", description = "Unauthorized access")
     })
+
 @DeleteMapping("/admin/categories/{categoryId}")
 public ResponseEntity<CategoryDTO> deleteCategory(@Valid @PathVariable Long categoryId){
     CategoryDTO deletedCategory =categoryService.deleteCategory(categoryId);
@@ -89,6 +91,7 @@ public ResponseEntity<CategoryDTO> deleteCategory(@Valid @PathVariable Long cate
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized access")
     })
+    
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO,@PathVariable Long categoryId){
             CategoryDTO savedCategoryDTO=categoryService.updateCategory(categoryDTO,categoryId);
