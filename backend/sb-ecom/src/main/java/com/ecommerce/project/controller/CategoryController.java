@@ -91,7 +91,7 @@ public ResponseEntity<CategoryDTO> deleteCategory(@Valid @PathVariable Long cate
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "401", description = "Unauthorized access")
     })
-    
+
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO,@PathVariable Long categoryId){
             CategoryDTO savedCategoryDTO=categoryService.updateCategory(categoryDTO,categoryId);
