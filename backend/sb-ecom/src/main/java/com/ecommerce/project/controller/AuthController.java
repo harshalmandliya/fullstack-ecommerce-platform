@@ -1,5 +1,6 @@
 package com.ecommerce.project.controller;
 
+import com.ecommerce.project.config.AppConstants;
 import com.ecommerce.project.payload.AuthenticationResult;
 import com.ecommerce.project.security.jwt.JwtUtils;
 import com.ecommerce.project.security.request.LoginRequest;
@@ -8,6 +9,9 @@ import com.ecommerce.project.security.response.MessageResponse;
 import com.ecommerce.project.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -51,12 +55,26 @@ public class AuthController {
     public  ResponseEntity<?> currentUserDetails(Authentication authentication){
         return ResponseEntity.ok().body(authService.getCurrentUserDetails(authentication));
     }
-@PostMapping("/signout")
+
+    @PostMapping("/signout")
     public ResponseEntity<?> signoutUser(){
         ResponseCookie cookie= authService.logoutUser();
     return ResponseEntity.ok()
             .header(HttpHeaders.SET_COOKIE, cookie.toString())
             .body(new MessageResponse("You have been signed out!"));
     }
+
+    @GetMapping("/sellers")
+    public ResponseEntity<?> getAllSellers(
+            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber) {
+
+        Sort sortByAndOrder = Sort.by(AppConstants.SORT_USERS_BY).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber ,
+                Integer.parseInt(AppConstants.PAGE_SIZE), sortByAndOrder);
+
+        return ResponseEntity.ok(authService.getAllSellers(pageDetails));
+    }
+
+
 
 }
