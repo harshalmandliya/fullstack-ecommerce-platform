@@ -7,6 +7,7 @@ import Sidebar from '../shared/Sidebar';
 
 const AdminLayout = () => {
     let [sidebarOpen, setSidebarOpen] = useState(false);
+    
   return (
     <div>
         <Dialog 
