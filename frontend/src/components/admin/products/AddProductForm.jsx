@@ -10,12 +10,13 @@ import Skeleton from '../../shared/Skeleton';
 import ErrorPage from '../../shared/ErrorPage';
 import SelectTextField from '../../shared/SelectTextField';
 
-const AddProductForm = ({ setOpen, product, update=false}) => {
+const AddProductForm = ({ setOpen, product, update=false, isAdmin, refreshProducts }) => {
 const [loader, setLoader] = useState(false);
 const [selectedCategory, setSelectedCategory] = useState();
 const { categories } = useSelector((state) => state.products);
 const { categoryLoader, errorMessage } = useSelector((state) => state.errors);
 const dispatch = useDispatch();
+const activeCategory = selectedCategory || categories?.[0];
     const {
         register,
         handleSubmit,
@@ -28,18 +29,22 @@ const dispatch = useDispatch();
 
     const saveProductHandler = (data) => {
         if(!update) {
+            if (!activeCategory) {
+                toast.error("Please select a category");
+                return;
+            }
              const sendData = {
                 ...data,
-                categoryId: selectedCategory.categoryId,
+                categoryId: activeCategory.categoryId,
             };
             // create new product logic
-            dispatch(addNewProductFromDashboard(sendData, toast, reset, setLoader, setOpen));
+            dispatch(addNewProductFromDashboard(sendData, toast, reset, setLoader, setOpen, isAdmin, refreshProducts));
         } else {
             const sendData = {
                 ...data,
                 id: product.id,
             };
-            dispatch(updateProductFromDashboard(sendData, toast, reset, setLoader, setOpen));
+            dispatch(updateProductFromDashboard(sendData, toast, reset, setLoader, setOpen, isAdmin, refreshProducts));
         }
     };
 
@@ -53,19 +58,13 @@ const dispatch = useDispatch();
             setValue("specialPrice", product?.specialPrice);
             setValue("description", product?.description);
         }
-    }, [update, product]);
+    }, [update, product, setValue]);
 
     useEffect(() => {
         if (!update) {
             dispatch(fetchCategories());
         }
     }, [dispatch, update]);
-
-    useEffect(() => {
-        if (!categoryLoader && categories) {
-            setSelectedCategory(categories[0]);
-        }
-    }, [categories, categoryLoader]);
 
     if (categoryLoader) return <Skeleton />
     if (errorMessage) return <ErrorPage message={errorMessage} />
@@ -89,7 +88,7 @@ const dispatch = useDispatch();
                      {!update && (
                     <SelectTextField
                         label="Select Categories"
-                        select={selectedCategory}
+                        select={activeCategory}
                         setSelect={setSelectedCategory}
                         lists={categories}
                     />
@@ -168,7 +167,7 @@ const dispatch = useDispatch();
             <Button disabled={loader}
                     onClick={() => setOpen(false)}
                     variant='outlined'
-                    className='text-white py-[10px] px-4 text-sm font-medium'>
+                    className='text-white py-2.5 px-4 text-sm font-medium'>
                 Cancel
             </Button>
 
@@ -178,7 +177,7 @@ const dispatch = useDispatch();
                 type='submit'
                 variant='contained'
                 color='primary'
-                className='bg-custom-blue text-white  py-[10px] px-4 text-sm font-medium'>
+                className='bg-custom-blue text-white  py-2.5 px-4 text-sm font-medium'>
                 {loader ? (
                     <div className='flex gap-2 items-center'>
                         <Spinners /> Loading...
@@ -195,7 +194,7 @@ const dispatch = useDispatch();
                 type='submit'
                 variant='contained'
                 color='primary'
-                className='bg-custom-blue text-white  py-[10px] px-4 text-sm font-medium'>
+                className='bg-custom-blue text-white  py-2.5 px-4 text-sm font-medium'>
                 {loader ? (
                     <div className='flex gap-2 items-center'>
                         <Spinners /> Loading...

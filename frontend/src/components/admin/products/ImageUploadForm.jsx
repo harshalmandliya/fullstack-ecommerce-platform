@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { updateProductImageFromDashboard } from '../../../store/actions';
 
-const ImageUploadForm = ({setOpen,product}) => {
+const ImageUploadForm = ({setOpen,product,isAdmin,refreshProducts}) => {
     const [loader, setLoader] = useState(false);
     const fileInputRef = useRef();
     const [previewImage, setPreviewImage] = useState(null);
@@ -30,8 +30,8 @@ const ImageUploadForm = ({setOpen,product}) => {
 
     };
 
-    const addNewImageHandler = () => {
- event.preventDefault();
+    const addNewImageHandler = (event) => {
+        event.preventDefault();
         if (!selectedFile) {
             toast.error("Please select an image before saving.");
             return;
@@ -40,7 +40,7 @@ const ImageUploadForm = ({setOpen,product}) => {
         const formData = new FormData();
         formData.append("image", selectedFile);
 
-        dispatch(updateProductImageFromDashboard(formData, product.id, toast, setLoader, setOpen));
+        dispatch(updateProductImageFromDashboard(formData, product.id, toast, setLoader, setOpen, isAdmin, refreshProducts));
     };
 
     const handleClearImage = () => {
@@ -83,7 +83,7 @@ const ImageUploadForm = ({setOpen,product}) => {
             <Button disabled={loader}
                     onClick={() => setOpen(false)}
                     variant='outlined'
-                    className='text-white py-[10px] px-4 text-sm font-medium'>
+                    className='text-white py-2.5 px-4 text-sm font-medium'>
                 Cancel
             </Button>
 
@@ -92,7 +92,7 @@ const ImageUploadForm = ({setOpen,product}) => {
                 type='submit'
                 variant='contained'
                 color='primary'
-                className='bg-custom-blue text-white  py-[10px] px-4 text-sm font-medium'>
+                className='bg-custom-blue text-white  py-2.5 px-4 text-sm font-medium'>
                 {loader ? (
                     <div className='flex gap-2 items-center'>
                         <Spinners /> Loading...

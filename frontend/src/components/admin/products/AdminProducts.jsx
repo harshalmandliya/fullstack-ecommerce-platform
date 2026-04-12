@@ -5,20 +5,22 @@ import Loader from '../../shared/Loader';
 import { FaBoxOpen } from 'react-icons/fa';
 import { DataGrid } from '@mui/x-data-grid';
 import { adminProductTableColumn } from '../../helper/tableColumn';
-import { useDashboardProductFilter } from '../../../hooks/useProductFilter';
+import { useDashboardProductFilter } from '../../../hooks/UseProductFilter';
 import Modal from '../../shared/Modal';
 import AddProductForm from './AddProductForm';
 import DeleteModal from '../../shared/DeleteModal';
 import toast from 'react-hot-toast';
 import ImageUploadForm from './ImageUploadForm';
-import { deleteProduct } from '../../../store/actions';
+import { dashboardProductsAction, deleteProduct } from '../../../store/actions';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import ProductViewModal from '../../shared/ProductViewModal';
+import { hasRole } from '../../../utils';
 
 
 const AdminProducts = () => {
   const {products, pagination} = useSelector((state) => state.products);
-  const { isLoading, errorMessage } = useSelector((state) => state.errors);
+  const { user } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.errors);
   const [currentPage, setCurrentPage] = useState(
       pagination?.pageNumber + 1 || 1
     );
@@ -34,8 +36,14 @@ const AdminProducts = () => {
   const [searchParams] = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pathname = useLocation().pathname;
+  const isAdmin = hasRole(user, "ROLE_ADMIN");
 
   useDashboardProductFilter();
+
+  const refreshProducts = () => {
+    const queryString = new URLSearchParams(searchParams).toString();
+    return dispatch(dashboardProductsAction(queryString, isAdmin));
+  };
 
   const tableRecords = products?.map((item) => {
   return {
@@ -79,7 +87,7 @@ const page = paginationModel.page + 1;
 };
 
 const onDeleteHandler = () => {
-  dispatch(deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal));
+  dispatch(deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal, isAdmin, refreshProducts));
 };
 
   const emptyProduct = !products || products?.length ===0;
@@ -154,6 +162,8 @@ const onDeleteHandler = () => {
           setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
           product={selectedProduct}
           update={openUpdateModal}
+          isAdmin={isAdmin}
+          refreshProducts={refreshProducts}
           />
     </Modal>
 
@@ -164,6 +174,8 @@ const onDeleteHandler = () => {
         <ImageUploadForm 
           setOpen={setOpenImageUploadModal}
           product={selectedProduct}
+          isAdmin={isAdmin}
+          refreshProducts={refreshProducts}
           />
     </Modal>
 
@@ -172,7 +184,7 @@ const onDeleteHandler = () => {
       setOpen={setOpenDeleteModal}
       loader={loader}
       title="Delete Product"
-      onDeleteHandler={() => {onDeleteHandler}} />
+      onDeleteHandler={onDeleteHandler} />
 
       <ProductViewModal 
         open={openProductViewModal}

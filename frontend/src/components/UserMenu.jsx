@@ -9,6 +9,7 @@ import BackDrop from './BackDrop';
 import { useDispatch } from 'react-redux';
 import { logOutUser } from '../store/actions';
 import { useNavigate } from 'react-router-dom';
+import { hasRole } from '../utils';
 
 const UserMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -16,8 +17,8 @@ const UserMenu = () => {
     const navigate = useNavigate();
     const open = Boolean(anchorEl);
     const { user } = useSelector((state) => state.auth);
-    const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
-    const isSeller = user && user?.roles.includes("ROLE_SELLER");
+    const isAdmin = hasRole(user, "ROLE_ADMIN");
+    const isSeller = hasRole(user, "ROLE_SELLER");
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -69,7 +70,7 @@ const UserMenu = () => {
             </MenuItem>
           </Link>
           
-          {isAdmin || isSeller && (
+          {(isAdmin || isSeller) && (
           <Link to={isAdmin ? "/admin" : "/admin/orders"}>
             <MenuItem className="flex gap-2" 
                 onClick={handleClose}>

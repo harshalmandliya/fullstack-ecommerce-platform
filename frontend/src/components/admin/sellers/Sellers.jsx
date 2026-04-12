@@ -10,7 +10,6 @@ import AddSellerForm from "./AddSellerForm";
 import useSellerFilter from "./useSellerFilter";
 
 const Sellers = () => {
-
   const [openModal, setOpenModal] = useState(false);
   const { sellers, pagination } = useSelector((state) => state.seller);
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
@@ -22,8 +21,9 @@ const Sellers = () => {
   if (errorMessage) {
     return <ErrorPage message={errorMessage} />;
   }
+
   return (
-   <React.Fragment>
+    <React.Fragment>
       <div className="pt-6 pb-10 flex justify-end">
         <button
           onClick={() => setOpenModal(true)}
@@ -62,7 +62,7 @@ const Sellers = () => {
         <AddSellerForm setOpen={setOpenModal} />
       </Modal>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export default Sellers;
