@@ -36,7 +36,8 @@ const PaymentConfirmation = () => {
                 pgResponseMessage: "Payment successful"
               };
               console.log(sendData);
-            dispatch(stripePaymentConfirmation(sendData, setErrorMessage, setLoading, toast));
+            dispatch(stripePaymentConfirmation(sendData, setErrorMessage, setLoading, toast))
+           
         }
     }, [paymentIntent, clientSecret, redirectStatus, cart]);
 
